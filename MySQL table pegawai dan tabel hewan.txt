@@ -1,0 +1,275 @@
+Enter password: ***
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 5.5.51 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database karyawan;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| karyawan           |
+| mahasiswa          |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use karyawan;
+Database changed
+mysql> create table pegawai
+    -> (idpegawai char (5) primary key,
+    -> namadepan varchar (10) not null,
+    -> namabelakang varchar (10) not null,
+    -> email varchar (20) not null,
+    -> telepon varchar (15) not null,
+    -> tglkontrak date,
+    -> idjob varchar (5) not null,
+    -> gaji varchar (10) not null,
+    -> tunjangan varchar (10) not null);
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> desc pegawai;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| idpegawai    | char(5)     | NO   | PRI | NULL    |       |
+| namadepan    | varchar(10) | NO   |     | NULL    |       |
+| namabelakang | varchar(10) | NO   |     | NULL    |       |
+| email        | varchar(20) | NO   |     | NULL    |       |
+| telepon      | varchar(15) | NO   |     | NULL    |       |
+| tglkontrak   | date        | YES  |     | NULL    |       |
+| idjob        | varchar(5)  | NO   |     | NULL    |       |
+| gaji         | varchar(10) | NO   |     | NULL    |       |
+| tunjangan    | varchar(10) | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+9 rows in set (0.08 sec)
+
+mysql> insert into pegawai
+    -> values
+    -> ("E001", "ferry", "gustiawan", "ferry@yahoo.com", "07117859004", "2005-09-0", "L0001", "2000000", "500000"),
+    -> ("E002", "aris", "ganiardi", "aris@yahoo.com", "081312345678", "2006-09-01", "L0002", "2000000", "200000"),
+    -> ("E003", "faiz", "ahmad", "faiz@gmail.com", "08136784322", "2006-10-01", "L0003", "1500000", "NULL"),
+    -> ("E004", "emma", "bunton", "emma@gmail.com", "081363454555", "2006-10-01", "L0004", "1500000", "0"),
+    -> ("E005", "mike", "scoff", "mike@plasa.com", "081634843428", "2007-09-01", "L0005", "1250000", "0"),
+    -> ("E006", "lincoln", "burrous", "linc@yahoo.com", "08527388432", "2008-09-01", "L0006", "1750000", "NULL");
+Query OK, 6 rows affected (0.10 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from pegawai;
++-----------+-----------+--------------+-----------------+--------------+------------+-------+---------+-----------+
+| idpegawai | namadepan | namabelakang | email           | telepon      | tglkontrak | idjob | gaji    | tunjangan |
++-----------+-----------+--------------+-----------------+--------------+------------+-------+---------+-----------+
+| E001      | ferry     | gustiawan    | ferry@yahoo.com | 07117859004  | 2005-09-00 | L0001 | 2000000 | 500000    |
+| E002      | aris      | ganiardi     | aris@yahoo.com  | 081312345678 | 2006-09-01 | L0002 | 2000000 | 200000    |
+| E003      | faiz      | ahmad        | faiz@gmail.com  | 08136784322  | 2006-10-01 | L0003 | 1500000 | NULL      |
+| E004      | emma      | bunton       | emma@gmail.com  | 081363454555 | 2006-10-01 | L0004 | 1500000 | 0         |
+| E005      | mike      | scoff        | mike@plasa.com  | 081634843428 | 2007-09-01 | L0005 | 1250000 | 0         |
+| E006      | lincoln   | burrous      | linc@yahoo.com  | 08527388432  | 2008-09-01 | L0006 | 1750000 | NULL      |
++-----------+-----------+--------------+-----------------+--------------+------------+-------+---------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from pegawai
+    -> where gaji <> "2000000" and gaji <> "1250000";
++-----------+-----------+--------------+----------------+--------------+------------+-------+---------+-----------+
+| idpegawai | namadepan | namabelakang | email          | telepon      | tglkontrak | idjob | gaji    | tunjangan |
++-----------+-----------+--------------+----------------+--------------+------------+-------+---------+-----------+
+| E003      | faiz      | ahmad        | faiz@gmail.com | 08136784322  | 2006-10-01 | L0003 | 1500000 | NULL      |
+| E004      | emma      | bunton       | emma@gmail.com | 081363454555 | 2006-10-01 | L0004 | 1500000 | 0         |
+| E006      | lincoln   | burrous      | linc@yahoo.com | 08527388432  | 2008-09-01 | L0006 | 1750000 | NULL      |
++-----------+-----------+--------------+----------------+--------------+------------+-------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from pegawai
+    -> where tunjangan = "NULL";
++-----------+-----------+--------------+----------------+-------------+------------+-------+---------+-----------+
+| idpegawai | namadepan | namabelakang | email          | telepon     | tglkontrak | idjob | gaji    | tunjangan |
++-----------+-----------+--------------+----------------+-------------+------------+-------+---------+-----------+
+| E003      | faiz      | ahmad        | faiz@gmail.com | 08136784322 | 2006-10-01 | L0003 | 1500000 | NULL      |
+| E006      | lincoln   | burrous      | linc@yahoo.com | 08527388432 | 2008-09-01 | L0006 | 1750000 | NULL      |
++-----------+-----------+--------------+----------------+-------------+------------+-------+---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from pegawai
+    -> where tunjangan <> "NULL";
++-----------+-----------+--------------+-----------------+--------------+------------+-------+---------+-----------+
+| idpegawai | namadepan | namabelakang | email           | telepon      | tglkontrak | idjob | gaji    | tunjangan |
++-----------+-----------+--------------+-----------------+--------------+------------+-------+---------+-----------+
+| E001      | ferry     | gustiawan    | ferry@yahoo.com | 07117859004  | 2005-09-00 | L0001 | 2000000 | 500000    |
+| E002      | aris      | ganiardi     | aris@yahoo.com  | 081312345678 | 2006-09-01 | L0002 | 2000000 | 200000    |
+| E004      | emma      | bunton       | emma@gmail.com  | 081363454555 | 2006-10-01 | L0004 | 1500000 | 0         |
+| E005      | mike      | scoff        | mike@plasa.com  | 081634843428 | 2007-09-01 | L0005 | 1250000 | 0         |
++-----------+-----------+--------------+-----------------+--------------+------------+-------+---------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select count(*) from pegawai;
++----------+
+| count(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.07 sec)
+
+mysql> select SUM(gaji) AS jumlah from pegawai;
++----------+
+| jumlah   |
++----------+
+| 10000000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select AVG(gaji) from pegawai;
++--------------------+
+| AVG(gaji)          |
++--------------------+
+| 1666666.6666666667 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select min(gaji) from pegawai;
++-----------+
+| min(gaji) |
++-----------+
+| 1250000   |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select max(gaji) from pegawai;
++-----------+
+| max(gaji) |
++-----------+
+| 2000000   |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> create database hewan;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use hewan;
+Database changed
+mysql> create table pet
+    -> (name varchar (10) not null,
+    -> owner varchar (10) not null,
+    -> species varchar (10) not null,
+    -> sex varchar (5) not null,
+    -> birth date,
+    -> death varchar (10) not null);
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> insert into pet
+    -> values
+    -> ("Puffball", "Diane", "Hamster", "f", "1999-03-03", "NULL"),
+    -> ("Claws", "Gwen", "Cat", "m", "1994-03-17", "NULL"),
+    -> ("Fluffy", "Harold", "Cat", "f", "1993-02-04", "NULL"),
+    -> ("Buffy", "Harold", "Dog", "f", "1989-05-13", "NULL"),
+    -> ("Fang", "Benny", "Dog", "m", "1990-08-27", "NULL"),
+    -> ("Bowser", "Diane", "Dog", "m", "1989-08-31", "NULL"),
+    -> ("Chrirpy", "Gwen", "Bird", "f", "1998-09-11", "1995-07-29"),
+    -> ("Whistler", "Gwen", "Bird", "NULL", "1997-12-09", "NULL"),
+    -> ("Sim", "Benny", "Snake", "m", "1996-04-29", "NULL");
+Query OK, 9 rows affected (0.10 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select * from pet;
++----------+--------+---------+------+------------+------------+
+| name     | owner  | species | sex  | birth      | death      |
++----------+--------+---------+------+------------+------------+
+| Puffball | Diane  | Hamster | f    | 1999-03-03 | NULL       |
+| Claws    | Gwen   | Cat     | m    | 1994-03-17 | NULL       |
+| Fluffy   | Harold | Cat     | f    | 1993-02-04 | NULL       |
+| Buffy    | Harold | Dog     | f    | 1989-05-13 | NULL       |
+| Fang     | Benny  | Dog     | m    | 1990-08-27 | NULL       |
+| Bowser   | Diane  | Dog     | m    | 1989-08-31 | NULL       |
+| Chrirpy  | Gwen   | Bird    | f    | 1998-09-11 | 1995-07-29 |
+| Whistler | Gwen   | Bird    | NULL | 1997-12-09 | NULL       |
+| Sim      | Benny  | Snake   | m    | 1996-04-29 | NULL       |
++----------+--------+---------+------+------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select Owner, count(species) as jumlah from pet group by owner;
++--------+--------+
+| Owner  | jumlah |
++--------+--------+
+| Benny  |      2 |
+| Diane  |      2 |
+| Gwen   |      3 |
+| Harold |      2 |
++--------+--------+
+4 rows in set (0.02 sec)
+
+mysql> select species, count(owner) as jumlah from pet group by species;
++---------+--------+
+| species | jumlah |
++---------+--------+
+| Bird    |      2 |
+| Cat     |      2 |
+| Dog     |      3 |
+| Hamster |      1 |
+| Snake   |      1 |
++---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select sex, count(species) as jumlah from pet group by sex;
++------+--------+
+| sex  | jumlah |
++------+--------+
+| f    |      4 |
+| m    |      4 |
+| NULL |      1 |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select species, sex, count(owner) as jumlah from pet group by species, sex;
++---------+------+--------+
+| species | sex  | jumlah |
++---------+------+--------+
+| Bird    | f    |      1 |
+| Bird    | NULL |      1 |
+| Cat     | f    |      1 |
+| Cat     | m    |      1 |
+| Dog     | f    |      1 |
+| Dog     | m    |      2 |
+| Hamster | f    |      1 |
+| Snake   | m    |      1 |
++---------+------+--------+
+8 rows in set (0.02 sec)
+
+mysql> select species, sex, count(owner) as jumlah from pet
+    -> where species <> "Hamster"
+    -> and species <> "Bird"
+    -> and species <> "Snake"
+    -> group by species, sex;
++---------+-----+--------+
+| species | sex | jumlah |
++---------+-----+--------+
+| Cat     | f   |      1 |
+| Cat     | m   |      1 |
+| Dog     | f   |      1 |
+| Dog     | m   |      2 |
++---------+-----+--------+
+4 rows in set (0.00 sec)
+
+mysql> select sex, count(species) as jumlah from pet
+    -> where sex <> "NULL"
+    -> group by sex;
++-----+--------+
+| sex | jumlah |
++-----+--------+
+| f   |      4 |
+| m   |      4 |
++-----+--------+
+2 rows in set (0.00 sec)
+
+mysql>
